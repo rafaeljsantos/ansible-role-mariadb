@@ -1,0 +1,20 @@
+---
+mariadb_server_version: 1:10.5*
+DBs: []
+privileges: []
+allowed_ip: []
+
+# Examples
+# DBs:
+# - name: db_test
+#   state: present
+
+# privileges:
+# - user: user1
+#   password: "*94BDCEBE19083CE2A1F959FD02F964C7AF4CFC29"  <--- select password('test')
+#   privileges: db_test.*:ALL
+#   state: present
+
+# allowed_ip:
+# - address: "192.168.1.10"
+#   state: present

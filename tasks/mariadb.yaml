@@ -1,0 +1,35 @@
+---
+- name: Install packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  loop:
+  - mariadb-server={{ mariadb_server_version }}
+  - python3-pymysql
+
+- name: Copy config file
+  ansible.builtin.copy:
+    src: 50-server.cnf
+    dest: /etc/mysql/mariadb.conf.d/50-server.cnf
+  notify:
+  - restart mariadb
+
+- name: Create databases
+  become: yes
+  community.mysql.mysql_db:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    login_unix_socket: /run/mysqld/mysqld.sock
+  with_items:
+  - "{{ DBs }}"
+
+- name: Set database permissions
+  community.mysql.mysql_user:
+    name: "{{ item.user }}"
+    password: "{{ item.password }}"
+    priv: "{{ item.privileges }}"
+    state: "{{ item.state }}"
+    login_unix_socket: /run/mysqld/mysqld.sock
+  with_items:
+  - "{{ privileges }}"

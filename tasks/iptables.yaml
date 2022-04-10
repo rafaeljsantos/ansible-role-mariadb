@@ -1,0 +1,25 @@
+---
+- name: Install iptables
+  ansible.builtin.apt:
+    name: iptables
+    state: present
+    
+- name: Allow connection
+  ansible.builtin.iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: "3306"
+    jump: ACCEPT
+    action: insert
+    source: "{{ item.address }}"
+    state: "{{ item.state }}"
+  with_items:
+  - "{{ allowed_ip }}"
+  
+- name: Block all
+  ansible.builtin.iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: "3306"
+    action: append
+    jump: DROP

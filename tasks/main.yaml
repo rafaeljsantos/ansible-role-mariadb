@@ -1,0 +1,6 @@
+---
+- name: mariadb
+  import_tasks: mariadb.yaml
+
+- name: iptables
+  import_tasks: iptables.yaml
