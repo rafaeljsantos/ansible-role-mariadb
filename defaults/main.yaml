@@ -11,7 +11,8 @@ allowed_ip: []
 
 # privileges:
 # - user: user1
-#   password: "*94BDCEBE19083CE2A1F959FD02F964C7AF4CFC29"  <--- select password('test')
+#   host: 192.168.1.10
+#   password: 12345
 #   privileges: db_test.*:ALL
 #   state: present
 
