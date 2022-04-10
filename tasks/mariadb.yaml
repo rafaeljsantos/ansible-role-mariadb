@@ -27,9 +27,11 @@
 - name: Set database permissions
   community.mysql.mysql_user:
     name: "{{ item.user }}"
+    host: "{{ item.host }}"
     password: "{{ item.password }}"
     priv: "{{ item.privileges }}"
     state: "{{ item.state }}"
     login_unix_socket: /run/mysqld/mysqld.sock
   with_items:
   - "{{ privileges }}"
+  
